@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import FamousPersonForm from '../FamousPersonForm/FamousPersonForm';
+import FamousPersonList from '../FamousPersonList/FamousPersonList';
 
 class FamousPerson extends Component {
 
@@ -21,11 +23,11 @@ class FamousPerson extends Component {
 
   clickHandler = (event) => {
     event.preventDefault();
-    let newFamousPerson = this.state.newPerson;
+    let newPerson = this.state.newPerson;
     this.setState({
       famousPeopleList: [
         ...this.state.famousPeopleList,
-        newFamousPerson
+        newPerson
       ]
     })
 
@@ -49,22 +51,17 @@ class FamousPerson extends Component {
   }
 
   render() {
+    console.log(this.state);
 
-    let listItem = this.state.famousPeopleList.map((person, i) => {
-      return <li key={i}>{person.name} is famous for {person.role}</li>;
-    })
     return (
       <div>
-        <form>
-          <p>Name:</p>
-          <input value={this.state.newPerson.name} type="text" onChange={this.handleChange('name')} />
-          <p>Role:</p>
-          <input value={this.state.newPerson.role} type="text" onChange={this.handleChange('role')} />
-          <ul>
-            {listItem}
-          </ul>
-          <button type="submit" onClick={this.clickHandler}>Submit</button>
-        </form>
+        <FamousPersonForm
+        newPerson={this.state.newPerson}
+        handleChange={this.handleChange}
+        clickHandler={this.props.clickHandler} />
+        <ul>
+          <FamousPersonList famousPeopleList={this.state.famousPeopleList} />
+        </ul>
         <pre>
           {JSON.stringify(this.state)}
         </pre>
